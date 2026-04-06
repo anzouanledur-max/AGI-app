@@ -6,304 +6,303 @@
 <title>AGI26</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#f5f5f5;}
+body{
+    margin:0;
+    font-family: Arial;
+    background:#f5f5f5;
+}
 
+/* HEADER */
 .header{
-background:#2d2d2d;
-color:#fff;
-padding:16px;
-font-size:18px;
-font-weight:bold;
+    background:#222;
+    color:white;
+    padding:15px;
+    text-align:center;
 }
 
-.nav{display:flex;background:#444;}
+/* MENU */
+.nav{
+    display:flex;
+    justify-content:space-around;
+    background:#333;
+}
 .nav button{
-flex:1;
-padding:14px;
-color:white;
-border:none;
-background:none;
-font-size:14px;
-cursor:pointer;
+    flex:1;
+    padding:12px;
+    border:none;
+    background:#333;
+    color:white;
+    font-size:14px;
+}
+.nav button:hover{
+    background:#555;
 }
 
-.page{display:none;}
-.active{display:block;}
+/* SECTIONS */
+.section{
+    display:none;
+    padding:15px;
+}
+.active{
+    display:block;
+}
 
+/* CARD */
 .card{
-background:white;
-margin:12px;
-padding:18px;
-border-radius:18px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
+/* SERVICES */
 .services{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-padding:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+.service{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    font-size:16px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
-.services .card{
-text-align:center;
-font-size:18px;
-font-weight:bold;
-padding:26px;
-border-radius:18px;
-transition:0.2s;
+/* INPUT */
+input, select, textarea{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
 }
 
-.services .card:hover{
-transform:scale(1.05);
-background:#fafafa;
+/* BUTTON */
+.btn{
+    background:#222;
+    color:white;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    width:100%;
+    margin-top:10px;
 }
 
-input,select,textarea{
-width:100%;
-padding:12px;
-margin-top:6px;
-border-radius:10px;
-border:1px solid #ccc;
-font-size:14px;
-}
-
-button.action{
-width:100%;
-padding:14px;
-background:#2d2d2d;
-color:white;
-border:none;
-border-radius:12px;
-margin-top:12px;
-font-weight:bold;
-}
-
+/* URGENCE */
 .urgence{
-background:#ffe5e5;
-margin:12px;
-padding:14px;
-border-radius:12px;
-color:red;
-font-weight:bold;
+    background:#ffe5e5;
+    padding:15px;
+    border-radius:15px;
+    color:red;
+    margin-top:15px;
 }
 
-.badge{
-padding:6px 10px;
-border-radius:12px;
-color:white;
-font-size:12px;
+/* LIST */
+.item{
+    background:white;
+    padding:10px;
+    margin-top:10px;
+    border-radius:10px;
 }
-.attente{background:orange;}
-.traite{background:green;}
 </style>
 </head>
 
 <body>
 
-<div class="header">AGI26 - Gestion Immobilière</div>
+<div class="header">
+    <h2>AGI26</h2>
+    <p>Assistance Gestion Immobilière</p>
+</div>
 
 <div class="nav">
-<button onclick="showPage('accueil')">🏠 Accueil</button>
-<button onclick="showPage('absence')">📅 Absence</button>
-<button onclick="showPage('probleme')">🔧 Signaler</button>
-<button onclick="login()">🔐 Admin</button>
+    <button onclick="show('home')">Accueil</button>
+    <button onclick="show('absence')">Absence</button>
+    <button onclick="show('probleme')">Signaler</button>
+    <button onclick="show('agenda')">Agenda</button>
 </div>
 
 <!-- ACCUEIL -->
-<div id="accueil" class="page active">
+<div id="home" class="section active">
 
 <div class="card">
-<h2>Bienvenue</h2>
-<p>Application professionnelle de gestion immobilière</p>
+    <h2>Bienvenue sur AGI</h2>
+    <p>Signalez un problème ou une absence facilement.</p>
 </div>
 
-<h3 style="padding-left:12px;">NOS SERVICES</h3>
+<h3>Nos services</h3>
 
 <div class="services">
-<div class="card">⚡ Électricité</div>
-<div class="card">🚿 Plomberie</div>
-<div class="card">❄️ Climatisation</div>
-<div class="card">🔐 Serrurerie</div>
-<div class="card">🪟 Menuiserie</div>
-<div class="card">🏗 Travaux</div>
+    <div class="service">❄️ Climatisation</div>
+    <div class="service">🚿 Plomberie</div>
+    <div class="service">⚡ Électricité</div>
+    <div class="service">🔑 Serrurerie</div>
+    <div class="service">🪟 Menuiserie</div>
+    <div class="service">🏗️ Gros Œuvre</div>
+    <div class="service">🛗 Ascenseur</div>
+    <div class="service">📅 Absence</div>
 </div>
 
-<div class="urgence">🚨 Urgence 24h / Intervention rapide</div>
-
-<h3 style="padding-left:12px;">📋 Activités</h3>
-<div id="liste"></div>
-
+<div class="urgence">
+    🚨 Urgence 24h/7j : signalez immédiatement !
 </div>
 
-<!-- ABSENCE -->
-<div id="absence" class="page">
-<div class="card">
-<h2>📅 Déclarer une absence</h2>
-
-<input id="nomAbs" placeholder="Nom">
-<input id="logementAbs" placeholder="Logement">
-
-<label>Date départ</label>
-<input type="date" id="depart">
-
-<label>Date retour</label>
-<input type="date" id="retour">
-
-<textarea id="info" placeholder="Raison"></textarea>
-
-<button class="action" onclick="envoyerAbsence()">Envoyer</button>
-</div>
 </div>
 
 <!-- PROBLEME -->
-<div id="probleme" class="page">
+<div id="probleme" class="section">
+
 <div class="card">
-<h2>🔧 Signaler un problème</h2>
+<h3>Signaler un problème</h3>
 
-<input id="nom" placeholder="Nom">
-<input id="logement" placeholder="Logement">
+<input id="nomP" placeholder="Nom complet">
+<input id="logementP" placeholder="Logement">
 
-<select id="type">
+<select id="typeP">
 <option>Plomberie</option>
 <option>Électricité</option>
-<option>Climatisation</option>
+<option>Serrurerie</option>
 <option>Menuiserie</option>
 <option>Autre</option>
 </select>
 
-<select id="urgence">
+<select id="urgenceP">
 <option>Normal</option>
 <option>Urgent</option>
 <option>Critique</option>
 </select>
 
-<textarea id="description" placeholder="Description"></textarea>
+<textarea id="descP" placeholder="Description"></textarea>
 
-<button class="action" onclick="envoyerProbleme()">Envoyer</button>
-</div>
+<button class="btn" onclick="envoyerProbleme()">Envoyer</button>
 </div>
 
-<!-- ADMIN -->
-<div id="admin" class="page">
-<h2 style="padding:12px;">Admin DRH26</h2>
-<div id="adminListe"></div>
+<div id="listeProblemes"></div>
+
+</div>
+
+<!-- ABSENCE -->
+<div id="absence" class="section">
+
+<div class="card">
+<h3>Signaler une absence</h3>
+
+<input id="nomA" placeholder="Nom complet">
+<input id="logementA" placeholder="Logement">
+
+<input type="date" id="departA">
+<input type="date" id="retourA">
+
+<textarea id="infoA" placeholder="Infos supplémentaires"></textarea>
+
+<button class="btn" onclick="envoyerAbsence()">Envoyer</button>
+</div>
+
+<div id="listeAbsences"></div>
+
+</div>
+
+<!-- AGENDA -->
+<div id="agenda" class="section">
+<h3>Historique</h3>
+
+<div id="historique"></div>
 </div>
 
 <script>
 
-// NAVIGATION
-function showPage(page){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.getElementById(page).classList.add("active");
+/* NAVIGATION */
+function show(id){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    afficherHistorique();
 }
 
-// LOGIN ADMIN
-function login(){
-let code = prompt("Code admin");
-if(code==="DRH26"){
-showPage("admin");
-afficherAdmin();
-}else{
-alert("Code incorrect");
-}
-}
-
-// SAVE
-function save(data){
-let liste = JSON.parse(localStorage.getItem("data")) || [];
-data.statut="attente";
-liste.push(data);
-localStorage.setItem("data",JSON.stringify(liste));
-}
-
-// ABSENCE
-function envoyerAbsence(){
-save({
-type:"absence",
-nom:document.getElementById("nomAbs").value,
-logement:document.getElementById("logementAbs").value,
-depart:document.getElementById("depart").value,
-retour:document.getElementById("retour").value,
-info:document.getElementById("info").value,
-date:new Date().toLocaleString()
-});
-afficher();
-alert("Absence envoyée");
-}
-
-// PROBLEME
+/* PROBLEME */
 function envoyerProbleme(){
-save({
-type:"probleme",
-nom:document.getElementById("nom").value,
-logement:document.getElementById("logement").value,
-probleme:document.getElementById("type").value,
-urgence:document.getElementById("urgence").value,
-description:document.getElementById("description").value,
-date:new Date().toLocaleString()
-});
-afficher();
-alert("Problème envoyé");
+    let data={
+        type:"Probleme",
+        nom:nomP.value,
+        logement:logementP.value,
+        typeP:typeP.value,
+        urgence:urgenceP.value,
+        desc:descP.value
+    };
+
+    let list=JSON.parse(localStorage.getItem("data")||"[]");
+    list.push(data);
+    localStorage.setItem("data",JSON.stringify(list));
+
+    afficherProblemes();
 }
 
-// AFFICHAGE UTILISATEUR
-function afficher(){
-let liste = JSON.parse(localStorage.getItem("data")) || [];
-let zone = document.getElementById("liste");
-zone.innerHTML="";
+/* ABSENCE */
+function envoyerAbsence(){
+    let data={
+        type:"Absence",
+        nom:nomA.value,
+        logement:logementA.value,
+        depart:departA.value,
+        retour:retourA.value,
+        info:infoA.value
+    };
 
-liste.slice().reverse().forEach(item=>{
-zone.innerHTML+=`
-<div class="card">
-${item.type==="probleme"?"🔧 "+item.probleme:"📅 Absence"}<br>
-👤 ${item.nom}<br>
-🏠 ${item.logement}<br>
-<span class="badge ${item.statut==="attente"?"attente":"traite"}">${item.statut}</span>
-</div>`;
-});
+    let list=JSON.parse(localStorage.getItem("data")||"[]");
+    list.push(data);
+    localStorage.setItem("data",JSON.stringify(list));
+
+    afficherAbsences();
 }
 
-// ADMIN
-function afficherAdmin(){
-let liste = JSON.parse(localStorage.getItem("data")) || [];
-let zone = document.getElementById("adminListe");
-zone.innerHTML="";
+/* AFFICHAGE */
+function afficherProblemes(){
+    let list=JSON.parse(localStorage.getItem("data")||"[]");
+    let div=document.getElementById("listeProblemes");
+    div.innerHTML="";
 
-liste.forEach((item,i)=>{
-zone.innerHTML+=`
-<div class="card">
-${item.type==="probleme"?"🔧 "+item.probleme:"📅 Absence"}<br>
-👤 ${item.nom}<br>
-🏠 ${item.logement}<br>
-
-<button onclick="valider(${i})">✔ Traité</button>
-<button onclick="supprimer(${i})">🗑 Supprimer</button>
-</div>`;
-});
+    list.filter(x=>x.type=="Probleme").forEach(e=>{
+        div.innerHTML+=`
+        <div class="item">
+        🔧 ${e.nom} - ${e.typeP} (${e.urgence})<br>
+        ${e.desc}
+        </div>`;
+    });
 }
 
-// ACTIONS
-function supprimer(i){
-let liste = JSON.parse(localStorage.getItem("data"));
-liste.splice(i,1);
-localStorage.setItem("data",JSON.stringify(liste));
-afficher();
-afficherAdmin();
+function afficherAbsences(){
+    let list=JSON.parse(localStorage.getItem("data")||"[]");
+    let div=document.getElementById("listeAbsences");
+    div.innerHTML="";
+
+    list.filter(x=>x.type=="Absence").forEach(e=>{
+        div.innerHTML+=`
+        <div class="item">
+        📅 ${e.nom}<br>
+        ${e.depart} → ${e.retour}
+        </div>`;
+    });
 }
 
-function valider(i){
-let liste = JSON.parse(localStorage.getItem("data"));
-liste[i].statut="traite";
-localStorage.setItem("data",JSON.stringify(liste));
-afficher();
-afficherAdmin();
+function afficherHistorique(){
+    let list=JSON.parse(localStorage.getItem("data")||"[]");
+    let div=document.getElementById("historique");
+    div.innerHTML="";
+
+    list.forEach(e=>{
+        div.innerHTML+=`
+        <div class="item">
+        ${e.type} - ${e.nom}
+        </div>`;
+    });
 }
 
-// LOAD
-window.onload = afficher;
+/* AUTO LOAD */
+afficherProblemes();
+afficherAbsences();
 
 </script>
 
 </body>
-  </html>
+</html>
