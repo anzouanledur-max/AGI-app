@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGI26</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5;}
+
+.header{
+background:#2d2d2d;
+color:#fff;
+padding:16px;
+font-size:18px;
+font-weight:bold;
+}
+
+.nav{display:flex;background:#444;}
+.nav button{
+flex:1;
+padding:14px;
+color:white;
+border:none;
+background:none;
+font-size:14px;
+cursor:pointer;
+}
+
+.page{display:none;}
+.active{display:block;}
+
+.card{
+background:white;
+margin:12px;
+padding:18px;
+border-radius:18px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.services{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+padding:12px;
+}
+
+.services .card{
+text-align:center;
+font-size:18px;
+font-weight:bold;
+padding:26px;
+border-radius:18px;
+transition:0.2s;
+}
+
+.services .card:hover{
+transform:scale(1.05);
+background:#fafafa;
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin-top:6px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+button.action{
+width:100%;
+padding:14px;
+background:#2d2d2d;
+color:white;
+border:none;
+border-radius:12px;
+margin-top:12px;
+font-weight:bold;
+}
+
+.urgence{
+background:#ffe5e5;
+margin:12px;
+padding:14px;
+border-radius:12px;
+color:red;
+font-weight:bold;
+}
+
+.badge{
+padding:6px 10px;
+border-radius:12px;
+color:white;
+font-size:12px;
+}
+.attente{background:orange;}
+.traite{background:green;}
+</style>
+</head>
+
+<body>
+
+<div class="header">AGI26 - Gestion Immobilière</div>
+
+<div class="nav">
+<button onclick="showPage('accueil')">🏠 Accueil</button>
+<button onclick="showPage('absence')">📅 Absence</button>
+<button onclick="showPage('probleme')">🔧 Signaler</button>
+<button onclick="login()">🔐 Admin</button>
+</div>
+
+<!-- ACCUEIL -->
+<div id="accueil" class="page active">
+
+<div class="card">
+<h2>Bienvenue</h2>
+<p>Application professionnelle de gestion immobilière</p>
+</div>
+
+<h3 style="padding-left:12px;">NOS SERVICES</h3>
+
+<div class="services">
+<div class="card">⚡ Électricité</div>
+<div class="card">🚿 Plomberie</div>
+<div class="card">❄️ Climatisation</div>
+<div class="card">🔐 Serrurerie</div>
+<div class="card">🪟 Menuiserie</div>
+<div class="card">🏗 Travaux</div>
+</div>
+
+<div class="urgence">🚨 Urgence 24h / Intervention rapide</div>
+
+<h3 style="padding-left:12px;">📋 Activités</h3>
+<div id="liste"></div>
+
+</div>
+
+<!-- ABSENCE -->
+<div id="absence" class="page">
+<div class="card">
+<h2>📅 Déclarer une absence</h2>
+
+<input id="nomAbs" placeholder="Nom">
+<input id="logementAbs" placeholder="Logement">
+
+<label>Date départ</label>
+<input type="date" id="depart">
+
+<label>Date retour</label>
+<input type="date" id="retour">
+
+<textarea id="info" placeholder="Raison"></textarea>
+
+<button class="action" onclick="envoyerAbsence()">Envoyer</button>
+</div>
+</div>
+
+<!-- PROBLEME -->
+<div id="probleme" class="page">
+<div class="card">
+<h2>🔧 Signaler un problème</h2>
+
+<input id="nom" placeholder="Nom">
+<input id="logement" placeholder="Logement">
+
+<select id="type">
+<option>Plomberie</option>
+<option>Électricité</option>
+<option>Climatisation</option>
+<option>Menuiserie</option>
+<option>Autre</option>
+</select>
+
+<select id="urgence">
+<option>Normal</option>
+<option>Urgent</option>
+<option>Critique</option>
+</select>
+
+<textarea id="description" placeholder="Description"></textarea>
+
+<button class="action" onclick="envoyerProbleme()">Envoyer</button>
+</div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="page">
+<h2 style="padding:12px;">Admin DRH26</h2>
+<div id="adminListe"></div>
+</div>
+
+<script>
+
+// NAVIGATION
+function showPage(page){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(page).classList.add("active");
+}
+
+// LOGIN ADMIN
+function login(){
+let code = prompt("Code admin");
+if(code==="DRH26"){
+showPage("admin");
+afficherAdmin();
+}else{
+alert("Code incorrect");
+}
+}
+
+// SAVE
+function save(data){
+let liste = JSON.parse(localStorage.getItem("data")) || [];
+data.statut="attente";
+liste.push(data);
+localStorage.setItem("data",JSON.stringify(liste));
+}
+
+// ABSENCE
+function envoyerAbsence(){
+save({
+type:"absence",
+nom:document.getElementById("nomAbs").value,
+logement:document.getElementById("logementAbs").value,
+depart:document.getElementById("depart").value,
+retour:document.getElementById("retour").value,
+info:document.getElementById("info").value,
+date:new Date().toLocaleString()
+});
+afficher();
+alert("Absence envoyée");
+}
+
+// PROBLEME
+function envoyerProbleme(){
+save({
+type:"probleme",
+nom:document.getElementById("nom").value,
+logement:document.getElementById("logement").value,
+probleme:document.getElementById("type").value,
+urgence:document.getElementById("urgence").value,
+description:document.getElementById("description").value,
+date:new Date().toLocaleString()
+});
+afficher();
+alert("Problème envoyé");
+}
+
+// AFFICHAGE UTILISATEUR
+function afficher(){
+let liste = JSON.parse(localStorage.getItem("data")) || [];
+let zone = document.getElementById("liste");
+zone.innerHTML="";
+
+liste.slice().reverse().forEach(item=>{
+zone.innerHTML+=`
+<div class="card">
+${item.type==="probleme"?"🔧 "+item.probleme:"📅 Absence"}<br>
+👤 ${item.nom}<br>
+🏠 ${item.logement}<br>
+<span class="badge ${item.statut==="attente"?"attente":"traite"}">${item.statut}</span>
+</div>`;
+});
+}
+
+// ADMIN
+function afficherAdmin(){
+let liste = JSON.parse(localStorage.getItem("data")) || [];
+let zone = document.getElementById("adminListe");
+zone.innerHTML="";
+
+liste.forEach((item,i)=>{
+zone.innerHTML+=`
+<div class="card">
+${item.type==="probleme"?"🔧 "+item.probleme:"📅 Absence"}<br>
+👤 ${item.nom}<br>
+🏠 ${item.logement}<br>
+
+<button onclick="valider(${i})">✔ Traité</button>
+<button onclick="supprimer(${i})">🗑 Supprimer</button>
+</div>`;
+});
+}
+
+// ACTIONS
+function supprimer(i){
+let liste = JSON.parse(localStorage.getItem("data"));
+liste.splice(i,1);
+localStorage.setItem("data",JSON.stringify(liste));
+afficher();
+afficherAdmin();
+}
+
+function valider(i){
+let liste = JSON.parse(localStorage.getItem("data"));
+liste[i].statut="traite";
+localStorage.setItem("data",JSON.stringify(liste));
+afficher();
+afficherAdmin();
+}
+
+// LOAD
+window.onload = afficher;
+
+</script>
+
+</body>
+  </html>
